@@ -86,3 +86,47 @@ document.querySelector('button').addEventListener('click', function() {
 
 
 
+document.querySelector('.add').addEventListener('click', function () {
+    const taskInput = document.querySelector('input[type="text"]');
+    const taskText = taskInput.value.trim();
+    if (taskText !== "") {
+        const tasksList = document.getElementById('tasks');
+        const taskItem = document.createElement('li');
+        taskItem.innerHTML = `
+            <input type="checkbox" class="checkbox">
+            <p>${taskText}</p>
+            <span class="cross">&times;</span>
+        `;
+        tasksList.appendChild(taskItem);
+        taskItem.classList.add('fade-in');
+        taskInput.value = "";
+
+        // Add event listener for the remove button
+        taskItem.querySelector('.cross').addEventListener('click', function () {
+            taskItem.classList.add('fade-out');
+            setTimeout(() => taskItem.remove(), 300);
+        });
+    }
+});
+
+// CSS Animations
+const style = document.createElement('style');
+style.textContent = `
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+.fade-out {
+    opacity: 1;
+    animation: fadeOut 0.5s forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+`;
+document.head.appendChild(style);
